@@ -76,8 +76,8 @@ use std::sync::Arc;
 /// }
 /// ```
 pub struct InjectProvided<M: ModuleInterface + HasProvider<I> + ?Sized, I: ?Sized>(
-    Box<I>,
-    PhantomData<M>,
+    pub Box<I>,
+    pub PhantomData<M>,
 );
 
 #[async_trait]
