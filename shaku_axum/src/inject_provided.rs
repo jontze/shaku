@@ -76,9 +76,16 @@ use std::sync::Arc;
 /// }
 /// ```
 pub struct InjectProvided<M: ModuleInterface + HasProvider<I> + ?Sized, I: ?Sized>(
-    pub Box<I>,
-    pub PhantomData<M>,
+    Box<I>,
+    PhantomData<M>,
 );
+
+// Impl New for InjectProvided
+impl<M: ModuleInterface + HasProvider<I> + ?Sized, I: ?Sized> InjectProvided<M, I> {
+    pub fn new(provider: Box<I>) -> InjectProvided<M, I> {
+        Self(provider, PhantomData::<M>)
+    }
+}
 
 #[async_trait]
 impl<S, M, I> FromRequestParts<S> for InjectProvided<M, I>
